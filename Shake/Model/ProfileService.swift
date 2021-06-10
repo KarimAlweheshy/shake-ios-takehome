@@ -8,9 +8,13 @@
 
 import Foundation
 
-enum UserService {
+protocol UserServiceProtocol {
+    func getUsers(completion: @escaping (Result<Users, APIServiceError>) -> Void)
+}
 
-    static func getUsers(completion: @escaping (Result<Users, APIServiceError>) -> Void) {
+final class UserService: UserServiceProtocol {
+
+    func getUsers(completion: @escaping (Result<Users, APIServiceError>) -> Void) {
         guard let url = URL(string: EndPoints.Profiles.rawValue) else {
             return completion(.failure(.invalidUrl))
         }
